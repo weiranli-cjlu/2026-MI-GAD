@@ -24,6 +24,7 @@ class Config:
     result_csv: str | None = None
     verbose: bool = False
     tqdm: bool = False
+    not_show_res:bool = False
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -91,6 +92,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--verbose", action="store_true")
     parser.add_argument("--tqdm", action="store_true")
+    parser.add_argument("--not_show_res", action="store_true")
     return parser
 
 

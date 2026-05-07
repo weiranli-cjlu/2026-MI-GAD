@@ -2,3 +2,5 @@ __pycache__
 .venv
 best_model.pth
 outputs
+tune_outputs
+*.db

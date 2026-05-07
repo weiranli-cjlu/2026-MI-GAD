@@ -227,13 +227,14 @@ def run_experiment(config: Config) -> dict[str, object]:
     }
     elapsed_seconds = time.time() - start_time
 
-    print(f"MI-GAD {config.runs} runs")
-    print(
-        f"FINAL TESTING AUC:{summary['mean_auc'] * 100:.4f}, std:{summary['std_auc'] * 100:.4f}, max:{summary['max_auc'] * 100:.4f}"
-    )
-    print(
-        f"FINAL TESTING AUPRC:{summary['mean_auprc'] * 100:.4f}, std:{summary['std_auprc'] * 100:.4f}, max:{summary['max_auprc'] * 100:.4f}"
-    )
+    if not config.not_show_res:
+        print(f"MI-GAD {config.runs} runs")
+        print(
+            f"FINAL TESTING AUC:{summary['mean_auc'] * 100:.4f}, std:{summary['std_auc'] * 100:.4f}, max:{summary['max_auc'] * 100:.4f}"
+        )
+        print(
+            f"FINAL TESTING AUPRC:{summary['mean_auprc'] * 100:.4f}, std:{summary['std_auprc'] * 100:.4f}, max:{summary['max_auprc'] * 100:.4f}"
+        )
 
     if config.result_csv:
         append_result_csv(config.result_csv, config, summary, elapsed_seconds)

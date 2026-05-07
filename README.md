@@ -24,7 +24,7 @@ MI-GAD_refactored/
 
 ```bash
 uv venv -p 3.12
-uv pip install torch==2.11.0 numpy scipy matplotlib scikit-learn tqdm --torch-backend=cu128
+uv pip install torch==2.11.0 numpy scipy matplotlib scikit-learn tqdm optuna pandas --torch-backend=cu128
 
 # Facebook
 python run.py --dataset Facebook --lr 2e-3 --epoch 100 --beta 0.2
