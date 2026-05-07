@@ -6,6 +6,7 @@ from dataclasses import asdict
 import numpy as np
 import torch
 import torch.nn as nn
+from tqdm import tqdm
 from sklearn.metrics import roc_auc_score
 from sklearn.preprocessing import MinMaxScaler
 
@@ -69,10 +70,13 @@ def train_one_run(
     best_epoch = 0
     wait = 0
     max_eval_auc = 0.0
-    checkpoint = ensure_dir(config.output_dir) / f"best_model_run{run_idx}.pth"
+    checkpoint = ensure_dir(config.output_dir) / f"best_model.pth"
 
     start_time = time.time()
-    for epoch in range(config.epoch):
+    loop = range(config.epoch)
+    if config.tqdm:
+        loop = tqdm(loop, desc="Epoch", position=1, leave=False)
+    for epoch in loop:
         model.train()
         optimizer.zero_grad()
 
@@ -168,7 +172,11 @@ def run_experiment(config: Config) -> dict[str, object]:
     all_auprc: list[float] = []
     runs: list[dict[str, float]] = []
 
-    for run_idx in range(config.runs):
+    loop = range(config.runs)
+    if config.tqdm:
+        loop = tqdm(loop, desc="Run", position=0, leave=True)
+
+    for run_idx in loop:
         result = train_one_run(config, run_idx, data, device)
         runs.append(result)
         all_auc.append(result["auc"])
@@ -180,20 +188,17 @@ def run_experiment(config: Config) -> dict[str, object]:
         "all_auprc": all_auprc,
         "mean_auc": float(np.mean(all_auc)),
         "std_auc": float(np.std(all_auc)),
+        "max_auc": float(np.max(all_auc)),
         "mean_auprc": float(np.mean(all_auprc)),
         "std_auprc": float(np.std(all_auprc)),
+        "max_auprc": float(np.max(all_auprc)),
     }
 
-    log("\n==============================")
-    log(str(all_auc))
-    log(
-        f"FINAL TESTING AUC:{summary['mean_auc'] * 100:.4f} FINAL TESTING AUC std:{summary['std_auc'] * 100:.4f}"
+    print(f"MI-GAD {config.runs} runs")
+    print(
+        f"FINAL TESTING AUC:{summary['mean_auc'] * 100:.4f}, std:{summary['std_auc'] * 100:.4f}, max:{summary['max_auc'] * 100:.4f}"
     )
-    log(f"{summary['mean_auc'] * 100:.2f} ({summary['std_auc'] * 100:.2f})")
-    log(str(all_auprc))
-    log(
-        f"FINAL TESTING AUPRC:{summary['mean_auprc'] * 100:.4f} FINAL TESTING AUPRC std:{summary['std_auprc'] * 100:.4f}"
+    print(
+        f"FINAL TESTING AUPRC:{summary['mean_auprc'] * 100:.4f}, std:{summary['std_auprc'] * 100:.4f}, max:{summary['max_auprc'] * 100:.4f}"
     )
-    log(f"{summary['mean_auprc'] * 100:.2f} ({summary['std_auprc'] * 100:.2f})")
-    log("==============================")
     return summary

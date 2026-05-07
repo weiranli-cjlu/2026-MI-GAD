@@ -33,7 +33,7 @@ python run.py --dataset Facebook --lr 2e-3 --epoch 100 --beta 0.2
 python run.py --dataset Amazon --lr 2e-3 --epoch 100 --beta 0.3
 
 # Silent mode: no per-epoch or summary logs
-python run.py --dataset Amazon --lr 2e-3 --epoch 100 --beta 0.3 --verbose false
+python run.py --dataset Amazon --lr 2e-3 --epoch 100 --beta 0.3 --verbose
 ```
 
 By default, data is read from:
