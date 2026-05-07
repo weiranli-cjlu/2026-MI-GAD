@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+import csv
 import time
 from dataclasses import asdict
+from datetime import datetime, timezone
+from pathlib import Path
 
 import numpy as np
 import torch
@@ -161,6 +164,34 @@ def train_one_run(
     }
 
 
+def append_result_csv(
+    result_csv: str | Path, config: Config, summary: dict[str, object], elapsed_seconds: float
+) -> None:
+    csv_path = Path(result_csv).expanduser()
+    if csv_path.parent != Path("."):
+        ensure_dir(csv_path.parent)
+
+    row = {
+        "datetime": datetime.now(timezone.utc).astimezone().isoformat(timespec="seconds"),
+        "dataset": config.dataset,
+        "trials": int(config.runs),
+        "auroc_mean": float(summary["mean_auc"]),
+        "auroc_std": float(summary["std_auc"]),
+        "auroc_max": float(summary["max_auc"]),
+        "auprc_mean": float(summary["mean_auprc"]),
+        "auprc_std": float(summary["std_auprc"]),
+        "auprc_max": float(summary["max_auprc"]),
+    }
+
+    fieldnames = list(row.keys())
+    write_header = not csv_path.exists() or csv_path.stat().st_size == 0
+    with csv_path.open("a", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        if write_header:
+            writer.writeheader()
+        writer.writerow(row)
+
+
 def run_experiment(config: Config) -> dict[str, object]:
     ensure_dir(config.output_dir)
     log(str(asdict(config)), config.verbose)
@@ -168,6 +199,7 @@ def run_experiment(config: Config) -> dict[str, object]:
     data = load_mat(config.dataset, config.data_dir)
     device = resolve_device(config.device, config.verbose)
 
+    start_time = time.time()
     all_auc: list[float] = []
     all_auprc: list[float] = []
     runs: list[dict[str, float]] = []
@@ -193,6 +225,7 @@ def run_experiment(config: Config) -> dict[str, object]:
         "std_auprc": float(np.std(all_auprc)),
         "max_auprc": float(np.max(all_auprc)),
     }
+    elapsed_seconds = time.time() - start_time
 
     print(f"MI-GAD {config.runs} runs")
     print(
@@ -201,4 +234,7 @@ def run_experiment(config: Config) -> dict[str, object]:
     print(
         f"FINAL TESTING AUPRC:{summary['mean_auprc'] * 100:.4f}, std:{summary['std_auprc'] * 100:.4f}, max:{summary['max_auprc'] * 100:.4f}"
     )
+
+    if config.result_csv:
+        append_result_csv(config.result_csv, config, summary, elapsed_seconds)
     return summary

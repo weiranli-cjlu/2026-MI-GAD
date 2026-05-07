@@ -21,6 +21,7 @@ class Config:
     weight_decay: float = 0.0
     runs: int = 5
     output_dir: str = "outputs"
+    result_csv: str | None = None
     verbose: bool = False
     tqdm: bool = False
 
@@ -81,6 +82,12 @@ def build_parser() -> argparse.ArgumentParser:
         "--output_dir",
         default=Config.output_dir,
         help="Directory for checkpoints and logs",
+    )
+    parser.add_argument(
+        "--result-csv",
+        dest="result_csv",
+        default=Config.result_csv,
+        help="Append a summary row to a CSV file (e.g. results.csv)",
     )
     parser.add_argument("--verbose", action="store_true")
     parser.add_argument("--tqdm", action="store_true")
