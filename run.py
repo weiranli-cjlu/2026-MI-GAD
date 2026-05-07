@@ -3,7 +3,6 @@ import scipy.sparse as sp
 import torch
 import torch.nn as nn
 from model import GAD
-import torch_geometric.utils as utils
 from utils import *
 from args import parameter_parser
 from Dataloader import load_mat
@@ -16,7 +15,6 @@ import random
 import os
 from tqdm import tqdm
 import json
-from utils import *
 
 
 

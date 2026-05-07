@@ -13,6 +13,10 @@ python run.py --dataset 'Amazon' --lr 2e-3 --epoch 100 --beta 0.3
 
 ## Requirements
 ```
+uv venv -p 3.12
+uv pip install torch==2.11.0 numpy scipy matplotlib scikit-learn tqdm --torch-backend=cu128
+
+
 - Python 3.9
 - PyTorch 2.0.0+cu118
 - Scikit-learn 1.3.2
