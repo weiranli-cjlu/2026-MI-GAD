@@ -36,6 +36,10 @@ python run.py --dataset Amazon --lr 2e-3 --epoch 100 --beta 0.3
 python run.py --dataset Amazon --lr 2e-3 --epoch 100 --beta 0.3 --verbose
 ```
 
+```bash
+python run.py --dataset cs --hidden_dim 256 --lr 0.004138 --dropout 0.18277 --alpha 0.6465 --beta 0.70002 --weight_decay 1.58768 --runs 50 --tqdm --result-csv outputs/result.csv
+```
+
 By default, data is read from:
 
 ```text
