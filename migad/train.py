@@ -173,7 +173,7 @@ def append_result_csv(
         ensure_dir(csv_path.parent)
 
     row = {
-        "datetime": datetime.now().isoformat(timespec="minutesminutes"),
+        "datetime": datetime.now().isoformat(timespec="minutes"),
         "dataset": config.dataset,
         "trials": int(config.runs),
         "auc": f'{float(summary["mean_auc"])*100:.2f} ± {float(summary["std_auc"])*100:.2f}({float(summary["max_auc"])*100:.2f})',
@@ -187,7 +187,7 @@ def append_result_csv(
     }
 
     write_header = not csv_path.exists() or csv_path.stat().st_size == 0
-    DataFrame([row]).to_csv(header=write_header, index=False, mode="a")
+    DataFrame([row]).to_csv(csv_path, header=write_header, index=False, mode="a")
 
 
 def run_experiment(config: Config) -> dict[str, object]:
