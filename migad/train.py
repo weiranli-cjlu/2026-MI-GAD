@@ -9,6 +9,7 @@ from pathlib import Path
 import numpy as np
 import torch
 import torch.nn as nn
+from pandas import DataFrame
 from tqdm import tqdm
 from sklearn.metrics import roc_auc_score
 from sklearn.preprocessing import MinMaxScaler
@@ -165,16 +166,18 @@ def train_one_run(
 
 
 def append_result_csv(
-    result_csv: str | Path, config: Config, summary: dict[str, object], elapsed_seconds: float
+    result_csv: str | Path, config: Config, summary: dict[str, object]
 ) -> None:
     csv_path = Path(result_csv).expanduser()
     if csv_path.parent != Path("."):
         ensure_dir(csv_path.parent)
 
     row = {
-        "datetime": datetime.now(timezone.utc).astimezone().isoformat(timespec="seconds"),
+        "datetime": datetime.now().isoformat(timespec="minutesminutes"),
         "dataset": config.dataset,
         "trials": int(config.runs),
+        "auc": f'{float(summary["mean_auc"])*100:.2f} ± {float(summary["std_auc"])*100:.2f}({float(summary["max_auc"])*100:.2f})',
+        "prc": f'{float(summary["mean_auprc"])*100:.2f} ± {float(summary["std_auprc"])*100:.2f}({float(summary["max_auprc"])*100:.2f})',
         "auroc_mean": float(summary["mean_auc"]),
         "auroc_std": float(summary["std_auc"]),
         "auroc_max": float(summary["max_auc"]),
@@ -183,13 +186,8 @@ def append_result_csv(
         "auprc_max": float(summary["max_auprc"]),
     }
 
-    fieldnames = list(row.keys())
     write_header = not csv_path.exists() or csv_path.stat().st_size == 0
-    with csv_path.open("a", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
-        if write_header:
-            writer.writeheader()
-        writer.writerow(row)
+    DataFrame([row]).to_csv(header=write_header, index=False, mode="a")
 
 
 def run_experiment(config: Config) -> dict[str, object]:
@@ -199,7 +197,6 @@ def run_experiment(config: Config) -> dict[str, object]:
     data = load_mat(config.dataset, config.data_dir)
     device = resolve_device(config.device, config.verbose)
 
-    start_time = time.time()
     all_auc: list[float] = []
     all_auprc: list[float] = []
     runs: list[dict[str, float]] = []
@@ -225,7 +222,6 @@ def run_experiment(config: Config) -> dict[str, object]:
         "std_auprc": float(np.std(all_auprc)),
         "max_auprc": float(np.max(all_auprc)),
     }
-    elapsed_seconds = time.time() - start_time
 
     if not config.not_show_res:
         print(f"MI-GAD {config.runs} runs")
@@ -237,5 +233,5 @@ def run_experiment(config: Config) -> dict[str, object]:
         )
 
     if config.result_csv:
-        append_result_csv(config.result_csv, config, summary, elapsed_seconds)
+        append_result_csv(config.result_csv, config, summary)
     return summary

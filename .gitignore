@@ -4,3 +4,4 @@ best_model.pth
 outputs
 tune_outputs
 *.db
+test.py
