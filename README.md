@@ -118,11 +118,11 @@ python run.py --dataset BlogCatalog \
     --alpha 1.7032954711310595 --beta 0.12082311149578229 \
     --patience 500 --weight_decay 0.0008598737339212274 \
     --runs 10 --result-csv outputs/result.csv --tqdm
-
+    
 python run.py --dataset YelpChi \
     --hidden_dim 256 --epoch 100 \
-    --lr 0.004138040112561018 --dropout 0.1827682615040224 \
-    --alpha 0.6465081710095758 --beta 0.700021375186549 \
-    --patience 500 --weight_decay 1.5876781526923984e-06 \
+    --lr 0.004711938313793034 --dropout 0.23447635020248575 \
+    --alpha 0.9983751062029745 --beta 0.5182720098717788 \
+    --patience 500 --weight_decay 0.0008396987422844343 \
     --runs 10 --result-csv outputs/result.csv --tqdm
 ```

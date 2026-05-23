@@ -161,7 +161,7 @@ def main() -> None:
         direction="maximize",
         sampler=sampler,
         pruner=pruner,
-        load_if_exists=args.load_if_exists,
+        load_if_exists=args.storage is not None,
     )
 
     def objective(trial: optuna.Trial) -> float:
