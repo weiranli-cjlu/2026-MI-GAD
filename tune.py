@@ -133,6 +133,8 @@ def save_json(path: Path, payload: dict[str, Any]) -> None:
 
 def main() -> None:
     args = build_parser().parse_args()
+    if args.study_name is None:
+        args.study_name = f"{args.dataset}_tune"
     output_dir = ensure_dir(args.output_dir)
 
     base_config = Config(
@@ -209,8 +211,8 @@ def main() -> None:
         best_payload["final_summary"] = final_summary
         best_payload["final_config"] = asdict(final_config)
 
-    save_json(output_dir / "best_params.json", best_payload)
-    study.trials_dataframe().to_csv(output_dir / "trials.csv", index=False)
+    save_json(output_dir / f"{args.study_name}_best_params.json", best_payload)
+    study.trials_dataframe().to_csv(output_dir / f"{args.study_name}_trials.csv", index=False)
 
     print("\n================ OPTUNA RESULT ================")
     print(f"Best trial: {study.best_trial.number}")
@@ -218,8 +220,8 @@ def main() -> None:
     print("Best params:")
     for key, value in study.best_trial.params.items():
         print(f"  --{key} {value}")
-    print(f"Saved: {output_dir / 'best_params.json'}")
-    print(f"Saved: {output_dir / 'trials.csv'}")
+    print(f"Saved: {output_dir / f'{args.study_name}_best_params.json'}")
+    print(f"Saved: {output_dir / f'{args.study_name}_trials.csv'}")
     print("================================================")
 
 

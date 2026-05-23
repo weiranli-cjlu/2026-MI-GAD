@@ -178,12 +178,6 @@ def append_result_csv(
         "trials": int(config.runs),
         "auc": f'{float(summary["mean_auc"])*100:.2f} ± {float(summary["std_auc"])*100:.2f}({float(summary["max_auc"])*100:.2f})',
         "prc": f'{float(summary["mean_auprc"])*100:.2f} ± {float(summary["std_auprc"])*100:.2f}({float(summary["max_auprc"])*100:.2f})',
-        "auroc_mean": float(summary["mean_auc"]),
-        "auroc_std": float(summary["std_auc"]),
-        "auroc_max": float(summary["max_auc"]),
-        "auprc_mean": float(summary["mean_auprc"]),
-        "auprc_std": float(summary["std_auprc"]),
-        "auprc_max": float(summary["max_auprc"]),
     }
 
     write_header = not csv_path.exists() or csv_path.stat().st_size == 0
