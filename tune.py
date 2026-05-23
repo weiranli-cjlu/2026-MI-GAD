@@ -185,7 +185,7 @@ def main() -> None:
         return value
 
     study.optimize(
-        objective, n_trials=args.n_trials, timeout=args.timeout, gc_after_trial=True
+        objective, n_trials=args.n_trials, timeout=args.timeout, gc_after_trial=True, show_progress_bar=True
     )
 
     best_config = replace(

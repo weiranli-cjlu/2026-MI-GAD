@@ -59,3 +59,70 @@ Checkpoints are saved to `outputs/best_model_run<id>.pth` by default. Use `--out
 - `--verbose` preserves the original behavior of printing arguments, run IDs, epoch losses, test AUC
 , and final summary will always show.
 - Module-level argument parsing has been removed, so importing `migad.data`, `migad.models`, or `migad.utils` no longer triggers CLI parsing.
+
+## 实验
+
+```bash
+python run.py --dataset Facebook \
+    --hidden_dim 16 --epoch 100 \
+    --lr 0.0069782812651260325 --dropout 0.0530955012311517 \
+    --alpha 0.7939742936287177 --beta 0.09296592446501117 \
+    --patience 500 --weight_decay 4.233032996527588e-07 \
+    --runs 10 --result-csv outputs/result.csv --tqdm
+
+python run.py --dataset cora \
+    --hidden_dim 256 --epoch 100 \
+    --lr 0.0009718319944817398 --dropout 0.3136396976291964 \
+    --alpha 1.1413115275378245 --beta 0.07414817040689042 \
+    --patience 500 --weight_decay 3.4630370261191806e-08 \
+    --runs 10 --result-csv outputs/result.csv --tqdm
+
+python run.py --dataset citeseer \
+    --hidden_dim 256 --epoch 100 \
+    --lr 0.0009718319944817398 --dropout 0.3136396976291964 \
+    --alpha 1.1413115275378245 --beta 0.07414817040689042 \
+    --patience 500 --weight_decay 3.4630370261191806e-08 \
+    --runs 10 --result-csv outputs/result.csv --tqdm
+
+python run.py --dataset tolokers \
+    --hidden_dim 256 --epoch 100 \
+    --lr 0.004138040112561018 --dropout 0.1827682615040224 \
+    --alpha 0.6465081710095758 --beta 0.700021375186549 \
+    --patience 500 --weight_decay 1.5876781526923984e-06 \
+    --runs 10 --result-csv outputs/result.csv --tqdm
+
+python run.py --dataset Amazon \
+    --hidden_dim 16 --epoch 100 \
+    --lr 0.0019379671536779212 --dropout 0.02372717750664053 \
+    --alpha 7588127966413724 --beta 0.19428321679592314 \
+    --patience 500 --weight_decay 8.689551819762203e-06 \
+    --runs 10 --result-csv outputs/result.csv --tqdm
+
+python run.py --dataset ACM \
+    --hidden_dim 256 --epoch 100 \
+    --lr 0.0009718319944817398 --dropout 0.3136396976291964 \
+    --alpha 1.1413115275378245 --beta 0.07414817040689042 \
+    --patience 500 --weight_decay 3.4630370261191806e-08 \
+    --runs 10 --result-csv outputs/result.csv --tqdm
+
+python run.py --dataset Flickr \
+    --hidden_dim 64 --epoch 100 \
+    --lr 0.001217284708112243 --dropout 0.08455453498485759 \
+    --alpha 1.7032954711310595 --beta 0.12082311149578229 \
+    --patience 500 --weight_decay 0.0008598737339212274 \
+    --runs 10 --result-csv outputs/result.csv --tqdm
+
+python run.py --dataset BlogCatalog \
+    --hidden_dim 64 --epoch 100 \
+    --lr 0.001217284708112243 --dropout 0.08455453498485759 \
+    --alpha 1.7032954711310595 --beta 0.12082311149578229 \
+    --patience 500 --weight_decay 0.0008598737339212274 \
+    --runs 10 --result-csv outputs/result.csv --tqdm
+
+python run.py --dataset YelpChi \
+    --hidden_dim 256 --epoch 100 \
+    --lr 0.004138040112561018 --dropout 0.1827682615040224 \
+    --alpha 0.6465081710095758 --beta 0.700021375186549 \
+    --patience 500 --weight_decay 1.5876781526923984e-06 \
+    --runs 10 --result-csv outputs/result.csv --tqdm
+```
