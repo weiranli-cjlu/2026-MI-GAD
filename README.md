@@ -125,11 +125,25 @@ python run.py --dataset BlogCatalog \
     --alpha 1.5760919393554615 --beta 0.0673135700780682 \
     --patience 500 --weight_decay 1.142516420337455e-07 \
     --runs 10 --result-csv outputs/result.csv --tqdm
-    
+
 python run.py --dataset YelpChi \
     --hidden_dim 256 --epoch 100 \
     --lr 0.004711938313793034 --dropout 0.23447635020248575 \
     --alpha 0.9983751062029745 --beta 0.5182720098717788 \
     --patience 500 --weight_decay 0.0008396987422844343 \
+    --runs 10 --result-csv outputs/result.csv --tqdm
+
+python run.py --dataset Reddit \
+    --hidden_dim 16 --epoch 100 \
+    --lr 0.008888248090821062 --dropout 0.11434330611127169 \
+    --alpha 1.4439942671328958 --beta 0.30024251587280915 \
+    --patience 500 --weight_decay 3.7894408299718935e-07 \
+    --runs 10 --result-csv outputs/result.csv --tqdm
+
+python run.py --dataset weibo \
+    --hidden_dim 256 --epoch 100 \
+    --lr 0.00029008221174355297 --dropout 0.2571347750585137 \
+    --alpha 0.5166736569393804 --beta 0.8358963380591916 \
+    --patience 500 --weight_decay 5.846661153974671e-07 \
     --runs 10 --result-csv outputs/result.csv --tqdm
 ```
