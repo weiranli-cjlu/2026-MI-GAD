@@ -107,9 +107,9 @@ python run.py --dataset ACM \
 
 python run.py --dataset Flickr \
     --hidden_dim 64 --epoch 100 \
-    --lr 0.001217284708112243 --dropout 0.08455453498485759 \
-    --alpha 1.7032954711310595 --beta 0.12082311149578229 \
-    --patience 500 --weight_decay 0.0008598737339212274 \
+    --lr 0.007428087840236459 --dropout 0.19201648936337873 \
+    --alpha 0.5599634490694338 --beta 0.3076017528761459 \
+    --patience 500 --weight_decay 0.0007220941578931524 \
     --runs 10 --result-csv outputs/result.csv --tqdm
 
 python run.py --dataset BlogCatalog \
