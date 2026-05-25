@@ -63,6 +63,13 @@ Checkpoints are saved to `outputs/best_model_run<id>.pth` by default. Use `--out
 ## 实验
 
 ```bash
+python run.py --dataset book \
+    --hidden_dim 128 --epoch 100 \
+    --lr 0.0009003241409640857 --dropout 0.43872535250962125 \
+    --alpha 1.5064079553471144 --beta 0.7947957156894448 \
+    --patience 500 --weight_decay 2.874792588228593e-07 \
+    --runs 10 --result-csv outputs/result.csv --tqdm
+
 python run.py --dataset Facebook \
     --hidden_dim 16 --epoch 100 \
     --lr 0.0069782812651260325 --dropout 0.0530955012311517 \
