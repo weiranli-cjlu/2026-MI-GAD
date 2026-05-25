@@ -86,9 +86,9 @@ python run.py --dataset citeseer \
 
 python run.py --dataset tolokers \
     --hidden_dim 256 --epoch 100 \
-    --lr 0.004138040112561018 --dropout 0.1827682615040224 \
-    --alpha 0.6465081710095758 --beta 0.700021375186549 \
-    --patience 500 --weight_decay 1.5876781526923984e-06 \
+    --lr 0.007320837856369199 --dropout 0.01734469509859761 \
+    --alpha 1.6368285307920063 --beta 0.6290747898599562 \
+    --patience 500 --weight_decay 0.0003165516687397805 \
     --runs 10 --result-csv outputs/result.csv --tqdm
 
 python run.py --dataset Amazon \

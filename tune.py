@@ -87,7 +87,6 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         help="Optional Optuna storage URL, e.g. sqlite:///tune.db",
     )
-    parser.add_argument("--load_if_exists", action="store_true")
 
     # Optional final verification with a larger number of runs.
     parser.add_argument(
