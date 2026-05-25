@@ -113,10 +113,10 @@ python run.py --dataset Flickr \
     --runs 10 --result-csv outputs/result.csv --tqdm
 
 python run.py --dataset BlogCatalog \
-    --hidden_dim 64 --epoch 100 \
-    --lr 0.001217284708112243 --dropout 0.08455453498485759 \
-    --alpha 1.7032954711310595 --beta 0.12082311149578229 \
-    --patience 500 --weight_decay 0.0008598737339212274 \
+    --hidden_dim 16 --epoch 100 \
+    --lr 0.001373835789198466 --dropout 0.014001787098104639 \
+    --alpha 1.5760919393554615 --beta 0.0673135700780682 \
+    --patience 500 --weight_decay 1.142516420337455e-07 \
     --runs 10 --result-csv outputs/result.csv --tqdm
     
 python run.py --dataset YelpChi \
