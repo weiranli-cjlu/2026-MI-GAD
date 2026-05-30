@@ -100,9 +100,9 @@ python run.py --dataset tolokers \
 
 python run.py --dataset Amazon \
     --hidden_dim 16 --epoch 100 \
-    --lr 0.0019379671536779212 --dropout 0.02372717750664053 \
-    --alpha 7588127966413724 --beta 0.19428321679592314 \
-    --patience 500 --weight_decay 8.689551819762203e-06 \
+    --lr 0.004787555908718548 --dropout 0.31145137570366116 \
+    --alpha 1.0796521347639405 --beta 0.2457988196425339 \
+    --patience 500 --weight_decay 8.183120511648454e-06 \
     --runs 10 --result-csv outputs/result.csv --tqdm
 
 python run.py --dataset ACM \
