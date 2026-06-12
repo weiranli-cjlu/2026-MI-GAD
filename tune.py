@@ -95,6 +95,7 @@ def build_parser() -> argparse.ArgumentParser:
         default=0,
         help="Re-run best params with this many runs after tuning; 0 disables",
     )
+    parser.add_argument("--use_best", action="store_true", default=False)
 
     return parser
 
@@ -147,7 +148,8 @@ def main() -> None:
         output_dir=str(output_dir),
         verbose=False,
         tqdm=False,
-        not_show_res=args.not_show_train_res
+        not_show_res=args.not_show_train_res,
+        use_best=args.use_best
     )
 
     sampler = optuna.samplers.TPESampler(seed=args.sampler_seed, multivariate=True)

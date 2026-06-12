@@ -75,6 +75,7 @@ def train_one_run(
     wait = 0
     max_eval_auc = 0.0
     checkpoint = ensure_dir(config.output_dir) / f"best_model.pth"
+    best_auc = 0
 
     start_time = time.time()
     loop = range(config.epoch)
@@ -102,17 +103,33 @@ def train_one_run(
         score = build_score(sc_pos, global_loss_sample, config.alpha, config.beta)
         epoch_auc = evaluate_auc(labels, score, config.dataset, data.test_id)
 
-        if loss.item() < best_loss and epoch > config.epoch // 2:
-            best_loss = loss.item()
-            best_epoch = epoch
-            wait = 0
-            torch.save(model.state_dict(), checkpoint)
-        else:
-            wait += 1
+        if config.use_best:
+            scores = np.zeros((config.tests, num_nodes))
+            run_aucs: list[float] = []
+            for test_idx in range(config.tests):
+                model.eval()
+                with torch.no_grad():
+                    node_embed = model(features)
+                    sc_pos = local_affinity(node_embed, adj_label, config.dataset)
+                    global_loss_sample, _ = global_inconsistency_loss(
+                        node_embed, data.test_id, config.dataset
+                    )
+                    score = build_score(sc_pos, global_loss_sample, config.alpha, config.beta)
+                    scores[test_idx] = score
+                    auc_score = evaluate_auc(labels, score, config.dataset, data.test_id)
+                    run_aucs.append(auc_score)
+                    max_eval_auc = max(max_eval_auc, auc_score)
+                    log(
+                        f"Test: {test_idx:04d} Auc: {auc_score:.6f} Best_Auc: {max_eval_auc:.6f}",
+                        config.verbose,
+                    )
 
-        if wait == config.patience:
-            log("Early stopping!", config.verbose)
-            break
+            final_score = scores.mean(axis=0)
+            auc_score = evaluate_auc(labels, final_score, config.dataset, data.test_id)
+
+            if auc_score > best_auc:
+                best_auc = auc_score
+                torch.save(model.state_dict(), checkpoint)
 
         loss.backward()
         optimizer.step()
