@@ -28,9 +28,9 @@ python run.py --dataset Flickr \
 
 python run.py --dataset tolokers \
     --hidden_dim 256 --epoch 100 \
-    --lr 0.008234445875050487 --dropout 0.021595851999052607 \
-    --alpha 0.9868702372990681 --beta 0.6211118182102594 \
-    --weight_decay 0.0005307510744902617 \
+    --lr 0.00778211923530846 --dropout 0.009726619495385256 \
+    --alpha 1.2859503583425633 --beta 0.7183848413517264 \
+    --weight_decay 0.0005631694744223225 \
     --runs 10 --result-csv outputs/result.csv --tqdm --use_best
 
 python run.py --dataset twitter \
