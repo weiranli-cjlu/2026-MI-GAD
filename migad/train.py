@@ -193,8 +193,8 @@ def append_result_csv(
         "datetime": datetime.now().isoformat(timespec="minutes"),
         "dataset": config.dataset,
         "trials": int(config.runs),
-        "auc": f'{float(summary["mean_auc"])*100:.2f} ± {float(summary["std_auc"])*100:.2f}({float(summary["max_auc"])*100:.2f})',
-        "prc": f'{float(summary["mean_auprc"])*100:.2f} ± {float(summary["std_auprc"])*100:.2f}({float(summary["max_auprc"])*100:.2f})',
+        "auc": f'{float(summary["mean_auc"])*100:.2f}±{float(summary["std_auc"])*100:.2f}({float(summary["max_auc"])*100:.2f})',
+        "prc": f'{float(summary["mean_auprc"])*100:.2f}±{float(summary["std_auprc"])*100:.2f}({float(summary["max_auprc"])*100:.2f})',
     }
 
     write_header = not csv_path.exists() or csv_path.stat().st_size == 0
