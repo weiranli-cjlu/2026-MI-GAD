@@ -1,8 +1,8 @@
 python run.py --dataset BlogCatalog \
     --hidden_dim 256 --epoch 100 \
-    --lr 0.004646830379844117 --dropout 0.5056663781148186 \
-    --alpha 0.5057705114311432 --beta 0.9402422536920799 \
-    --weight_decay 7.970075263650973e-05 \
+    --lr 0.0011375443848145328 --dropout 0.4201491411392214 \
+    --alpha 0.5045263236715447 --beta 0.9991322785603456 \
+    --weight_decay 0.00045615156408623656 \
     --runs 10 --result-csv outputs/result.csv --tqdm --use_best
 
 python run.py --dataset book \
